@@ -1,0 +1,21 @@
+"use client";
+
+import Link from "next/link";
+import { useCart } from "@/lib/cart-context";
+
+export function CartLink() {
+  const { itemCount } = useCart();
+  return (
+    <Link
+      href="/cart"
+      className="relative flex items-center gap-1.5 text-[15px] font-semibold text-ink-soft hover:text-ink"
+    >
+      Cart
+      {itemCount > 0 && (
+        <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-lime px-1 text-xs font-bold text-ink">
+          {itemCount}
+        </span>
+      )}
+    </Link>
+  );
+}

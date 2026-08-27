@@ -1,0 +1,510 @@
+import type { Product } from "@/lib/types";
+
+/**
+ * Starter catalog, inserted into the `products` collection by
+ * `scripts/seed.ts`. Not read at runtime — once seeded, the storefront and
+ * admin only ever read from the database (see `lib/data/products.ts`).
+ */
+export const SEED_PRODUCTS: Omit<Product, "id">[] = [
+  {
+    slug: "premium-business-cards",
+    name: "Premium Business Cards",
+    category: "business-cards-stationery",
+    shortDescription: "Matte or gloss, 350gsm card stock.",
+    description:
+      "Double-sided business cards on 350gsm card stock. Upload your artwork or send us your details and we'll typeset it for you.",
+    image: "https://images.unsplash.com/photo-1623305463957-df17547327cb?q=80&w=800&auto=format&fit=crop",
+    imageAlt: "Stack of blank business cards on a flat surface",
+    variantGroups: [
+      {
+        key: "finish",
+        label: "Finish",
+        options: [
+          { value: "matte", label: "Matte", priceModifier: 0 },
+          { value: "gloss", label: "Gloss", priceModifier: 0 },
+          { value: "spot-uv", label: "Spot UV", priceModifier: 3000 },
+        ],
+      },
+    ],
+    quantityTiers: [
+      { minQty: 100, unitPrice: 45 },
+      { minQty: 250, unitPrice: 32 },
+      { minQty: 500, unitPrice: 24 },
+      { minQty: 1000, unitPrice: 18 },
+    ],
+    minQuantity: 100,
+    quantityStep: 50,
+    allowsArtworkUpload: true,
+    customQuoteOnly: false,
+    turnaroundDays: 2,
+    productionNote: "Free typesetting if you send your details instead of artwork.",
+  },
+  {
+    slug: "receipt-books",
+    name: "Receipt Books",
+    category: "business-cards-stationery",
+    shortDescription: "Duplicate or triplicate, numbered.",
+    description:
+      "Custom receipt and invoice booklets, duplicate or triplicate, sequentially numbered and branded with your business details.",
+    image: "https://images.unsplash.com/photo-1686581639043-893261d6b43f?q=80&w=800&auto=format&fit=crop",
+    imageAlt: "Curled paper receipt on a desk",
+    variantGroups: [
+      {
+        key: "copies",
+        label: "Copy type",
+        options: [
+          { value: "duplicate", label: "Duplicate (2-part)", priceModifier: 0 },
+          { value: "triplicate", label: "Triplicate (3-part)", priceModifier: 800 },
+        ],
+      },
+    ],
+    quantityTiers: [
+      { minQty: 5, unitPrice: 2500 },
+      { minQty: 20, unitPrice: 2200 },
+      { minQty: 50, unitPrice: 1900 },
+    ],
+    minQuantity: 5,
+    quantityStep: 5,
+    allowsArtworkUpload: true,
+    customQuoteOnly: false,
+    turnaroundDays: 3,
+    productionNote: "50 sets per booklet unless you tell us otherwise.",
+  },
+  {
+    slug: "pvc-id-cards",
+    name: "PVC ID Cards",
+    category: "business-cards-stationery",
+    shortDescription: "Durable PVC, staff or member IDs.",
+    description:
+      "Full-colour PVC ID cards, printed both sides. Send us a spreadsheet of names and photos for bulk batches.",
+    image: "https://images.unsplash.com/photo-1671376354112-6de3d08b97af?q=80&w=800&auto=format&fit=crop",
+    imageAlt: "Blank ID card on a lanyard",
+    variantGroups: [
+      {
+        key: "finish",
+        label: "Finish",
+        options: [
+          { value: "standard", label: "Standard", priceModifier: 0 },
+          { value: "hologram", label: "With hologram overlay", priceModifier: 400 },
+        ],
+      },
+    ],
+    quantityTiers: [
+      { minQty: 10, unitPrice: 1200 },
+      { minQty: 50, unitPrice: 950 },
+      { minQty: 200, unitPrice: 750 },
+    ],
+    minQuantity: 10,
+    quantityStep: 5,
+    allowsArtworkUpload: true,
+    customQuoteOnly: false,
+    turnaroundDays: 3,
+    productionNote: "Bulk name/photo batches: use Request a Quote instead.",
+  },
+  {
+    slug: "branded-journals",
+    name: "Branded Journals & Notebooks",
+    category: "business-cards-stationery",
+    shortDescription: "Hardcover, foil-stamped covers.",
+    description:
+      "Hardcover notebooks with your logo foil-stamped or full-colour printed on the cover. Popular for staff welcome packs and corporate gifting.",
+    image: "https://images.unsplash.com/photo-1611079830811-865ff4428d17?q=80&w=800&auto=format&fit=crop",
+    imageAlt: "Hardcover notebook with a pen on top",
+    variantGroups: [
+      {
+        key: "cover",
+        label: "Cover",
+        options: [
+          { value: "foil", label: "Foil-stamped", priceModifier: 0 },
+          { value: "full-colour", label: "Full-colour print", priceModifier: 600 },
+        ],
+      },
+    ],
+    quantityTiers: [
+      { minQty: 20, unitPrice: 3800 },
+      { minQty: 50, unitPrice: 3300 },
+      { minQty: 100, unitPrice: 2900 },
+    ],
+    minQuantity: 20,
+    quantityStep: 10,
+    allowsArtworkUpload: true,
+    customQuoteOnly: false,
+    turnaroundDays: 5,
+    productionNote: "Sample proof sent for approval before full run.",
+  },
+  {
+    slug: "flyers",
+    name: "Flyers",
+    category: "flyers-posters",
+    shortDescription: "A5 or A6, full colour, both sides.",
+    description:
+      "Full-colour flyers on 170gsm gloss paper, printed both sides. Great for promos, events and menus.",
+    image: "https://images.unsplash.com/photo-1695634621375-0b66a9d5d1bc?q=80&w=800&auto=format&fit=crop",
+    imageAlt: "Folded printed brochure",
+    variantGroups: [
+      {
+        key: "size",
+        label: "Size",
+        options: [
+          { value: "a6", label: "A6", priceModifier: 0 },
+          { value: "a5", label: "A5", priceModifier: 12 },
+        ],
+      },
+    ],
+    quantityTiers: [
+      { minQty: 100, unitPrice: 55 },
+      { minQty: 500, unitPrice: 32 },
+      { minQty: 1000, unitPrice: 22 },
+      { minQty: 5000, unitPrice: 14 },
+    ],
+    minQuantity: 100,
+    quantityStep: 100,
+    allowsArtworkUpload: true,
+    customQuoteOnly: false,
+    turnaroundDays: 2,
+    productionNote: "Print-ready PDF preferred; we'll flag low-resolution uploads.",
+  },
+  {
+    slug: "posters",
+    name: "Posters",
+    category: "flyers-posters",
+    shortDescription: "A3 to A1, satin or gloss.",
+    description:
+      "Large-format posters for events, campaigns and in-store displays, printed on satin or gloss stock.",
+    image: "https://images.unsplash.com/photo-1638294620053-f6560f8c726a?q=80&w=800&auto=format&fit=crop",
+    imageAlt: "Blank paper clipped to a wall",
+    variantGroups: [
+      {
+        key: "size",
+        label: "Size",
+        options: [
+          { value: "a3", label: "A3", priceModifier: 0 },
+          { value: "a2", label: "A2", priceModifier: 1500 },
+          { value: "a1", label: "A1", priceModifier: 3200 },
+        ],
+      },
+    ],
+    quantityTiers: [
+      { minQty: 5, unitPrice: 2800 },
+      { minQty: 20, unitPrice: 2200 },
+      { minQty: 50, unitPrice: 1800 },
+    ],
+    minQuantity: 5,
+    quantityStep: 5,
+    allowsArtworkUpload: true,
+    customQuoteOnly: false,
+    turnaroundDays: 2,
+    productionNote: "Minimum 150dpi at final size, we'll flag anything lower.",
+  },
+  {
+    slug: "pvc-banners",
+    name: "PVC Banners",
+    category: "banners-signage",
+    shortDescription: "Weatherproof, eyelets included.",
+    description:
+      "Full-colour PVC banners with reinforced hems and eyelets for hanging. Priced per square metre.",
+    image: "https://images.unsplash.com/photo-1638368888211-cecd27facf71?q=80&w=800&auto=format&fit=crop",
+    imageAlt: "Large outdoor banner on a city street",
+    variantGroups: [
+      {
+        key: "size",
+        label: "Size",
+        options: [
+          { value: "2x1", label: "2m x 1m", priceModifier: 0 },
+          { value: "3x1.5", label: "3m x 1.5m", priceModifier: 8000 },
+          { value: "4x2", label: "4m x 2m", priceModifier: 18000 },
+        ],
+      },
+    ],
+    quantityTiers: [
+      { minQty: 1, unitPrice: 12000 },
+      { minQty: 3, unitPrice: 11000 },
+      { minQty: 10, unitPrice: 9800 },
+    ],
+    minQuantity: 1,
+    quantityStep: 1,
+    allowsArtworkUpload: true,
+    customQuoteOnly: false,
+    turnaroundDays: 3,
+    productionNote: "Tell us the hanging method in the order notes.",
+  },
+  {
+    slug: "roll-up-banners",
+    name: "Roll-Up Banners",
+    category: "banners-signage",
+    shortDescription: "Retractable stand included.",
+    description:
+      "Retractable roll-up banner stands, 85cm x 200cm, complete with carry case. Ideal for exhibitions and storefronts.",
+    image: "https://images.unsplash.com/photo-1743763582672-52641ed63310?q=80&w=800&auto=format&fit=crop",
+    imageAlt: "Standing banner displays at an event",
+    variantGroups: [
+      {
+        key: "stand",
+        label: "Stand quality",
+        options: [
+          { value: "standard", label: "Standard stand", priceModifier: 0 },
+          { value: "premium", label: "Premium aluminium stand", priceModifier: 6000 },
+        ],
+      },
+    ],
+    quantityTiers: [
+      { minQty: 1, unitPrice: 28000 },
+      { minQty: 3, unitPrice: 26000 },
+      { minQty: 10, unitPrice: 24000 },
+    ],
+    minQuantity: 1,
+    quantityStep: 1,
+    allowsArtworkUpload: true,
+    customQuoteOnly: false,
+    turnaroundDays: 4,
+    productionNote: "Includes one free design revision before print.",
+  },
+  {
+    slug: "shopfront-signage",
+    name: "Shopfront Signage",
+    category: "banners-signage",
+    shortDescription: "Custom size, site visit available.",
+    description:
+      "Acrylic, ACP or flex-face shopfront signage. Every job is measured to the site, so this one's a quote rather than a fixed price.",
+    image: "https://images.unsplash.com/photo-1690964099559-ac041f77d7b1?q=80&w=800&auto=format&fit=crop",
+    imageAlt: "Blank illuminated shop signboard",
+    variantGroups: [],
+    quantityTiers: [],
+    minQuantity: 1,
+    quantityStep: 1,
+    allowsArtworkUpload: true,
+    customQuoteOnly: true,
+    turnaroundDays: 7,
+    productionNote: "We schedule a site visit before quoting installed signage.",
+  },
+  {
+    slug: "custom-t-shirts",
+    name: "Custom T-Shirts",
+    category: "apparel",
+    shortDescription: "Cotton tees, DTF print.",
+    description:
+      "100% cotton t-shirts with full-colour DTF print, front or back. Mix sizes within one order.",
+    image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=800&auto=format&fit=crop",
+    imageAlt: "Plain crew-neck t-shirt",
+    variantGroups: [
+      {
+        key: "color",
+        label: "Colour",
+        options: [
+          { value: "black", label: "Black", priceModifier: 0 },
+          { value: "white", label: "White", priceModifier: 0 },
+          { value: "navy", label: "Navy", priceModifier: 0 },
+          { value: "red", label: "Red", priceModifier: 0 },
+        ],
+      },
+      {
+        key: "size",
+        label: "Size",
+        options: [
+          { value: "s", label: "S", priceModifier: 0 },
+          { value: "m", label: "M", priceModifier: 0 },
+          { value: "l", label: "L", priceModifier: 0 },
+          { value: "xl", label: "XL", priceModifier: 0 },
+          { value: "xxl", label: "XXL", priceModifier: 500 },
+        ],
+      },
+    ],
+    quantityTiers: [
+      { minQty: 1, unitPrice: 8500 },
+      { minQty: 10, unitPrice: 7200 },
+      { minQty: 50, unitPrice: 6100 },
+      { minQty: 100, unitPrice: 5400 },
+    ],
+    minQuantity: 1,
+    quantityStep: 1,
+    allowsArtworkUpload: true,
+    customQuoteOnly: false,
+    turnaroundDays: 4,
+    productionNote: "Mixed sizes in one order? List the breakdown in order notes.",
+  },
+  {
+    slug: "printed-hoodies",
+    name: "Printed Hoodies",
+    category: "apparel",
+    shortDescription: "Fleece-lined, front or back print.",
+    description:
+      "Fleece-lined hoodies with full-colour front or back print. Comfortable, heavyweight fabric built for Harmattan season.",
+    image: "https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?q=80&w=800&auto=format&fit=crop",
+    imageAlt: "Hoodie on display",
+    variantGroups: [
+      {
+        key: "color",
+        label: "Colour",
+        options: [
+          { value: "black", label: "Black", priceModifier: 0 },
+          { value: "grey", label: "Grey", priceModifier: 0 },
+          { value: "navy", label: "Navy", priceModifier: 0 },
+        ],
+      },
+      {
+        key: "size",
+        label: "Size",
+        options: [
+          { value: "s", label: "S", priceModifier: 0 },
+          { value: "m", label: "M", priceModifier: 0 },
+          { value: "l", label: "L", priceModifier: 0 },
+          { value: "xl", label: "XL", priceModifier: 0 },
+          { value: "xxl", label: "XXL", priceModifier: 800 },
+        ],
+      },
+    ],
+    quantityTiers: [
+      { minQty: 1, unitPrice: 16500 },
+      { minQty: 10, unitPrice: 14200 },
+      { minQty: 50, unitPrice: 12800 },
+    ],
+    minQuantity: 1,
+    quantityStep: 1,
+    allowsArtworkUpload: true,
+    customQuoteOnly: false,
+    turnaroundDays: 5,
+    productionNote: "Embroidery available on request — mention it in order notes.",
+  },
+  {
+    slug: "custom-mugs",
+    name: "Custom Mugs",
+    category: "mugs-gifts",
+    shortDescription: "White ceramic, sublimation print.",
+    description:
+      "11oz white ceramic mugs, full-wrap sublimation print. Popular for birthdays, weddings and corporate gifting.",
+    image: "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?q=80&w=800&auto=format&fit=crop",
+    imageAlt: "Plain white ceramic mug",
+    variantGroups: [
+      {
+        key: "style",
+        label: "Style",
+        options: [
+          { value: "standard", label: "Standard white", priceModifier: 0 },
+          { value: "magic", label: "Colour-change (magic mug)", priceModifier: 1500 },
+        ],
+      },
+    ],
+    quantityTiers: [
+      { minQty: 1, unitPrice: 4500 },
+      { minQty: 10, unitPrice: 3800 },
+      { minQty: 50, unitPrice: 3200 },
+    ],
+    minQuantity: 1,
+    quantityStep: 1,
+    allowsArtworkUpload: true,
+    customQuoteOnly: false,
+    turnaroundDays: 3,
+    productionNote: "Upload a photo or design — we'll centre it on the wrap for you.",
+  },
+  {
+    slug: "throw-pillows",
+    name: "Throw Pillows",
+    category: "mugs-gifts",
+    shortDescription: "Both sides printed, insert included.",
+    description:
+      "Custom photo or design throw pillows, printed both sides, filling included. A favourite for personalised gifts.",
+    image: "https://images.unsplash.com/photo-1629949009765-40fc74c9ec21?q=80&w=800&auto=format&fit=crop",
+    imageAlt: "White throw pillow on a sofa",
+    variantGroups: [
+      {
+        key: "size",
+        label: "Size",
+        options: [
+          { value: "40x40", label: "40cm x 40cm", priceModifier: 0 },
+          { value: "50x50", label: "50cm x 50cm", priceModifier: 1800 },
+        ],
+      },
+    ],
+    quantityTiers: [
+      { minQty: 1, unitPrice: 9500 },
+      { minQty: 5, unitPrice: 8600 },
+    ],
+    minQuantity: 1,
+    quantityStep: 1,
+    allowsArtworkUpload: true,
+    customQuoteOnly: false,
+    turnaroundDays: 4,
+    productionNote: "Square photos print best — we'll flag awkward crops before we print.",
+  },
+  {
+    slug: "award-plaques",
+    name: "Award Plaques",
+    category: "mugs-gifts",
+    shortDescription: "Acrylic or wood, engraved text.",
+    description:
+      "Acrylic or wood award plaques with engraved or UV-printed text. Send us the recipient details and wording.",
+    image: "https://images.unsplash.com/photo-1578269174936-2709b6aeb913?q=80&w=800&auto=format&fit=crop",
+    imageAlt: "Trophy award on display",
+    variantGroups: [
+      {
+        key: "material",
+        label: "Material",
+        options: [
+          { value: "acrylic", label: "Acrylic", priceModifier: 0 },
+          { value: "wood", label: "Wood", priceModifier: 2500 },
+        ],
+      },
+    ],
+    quantityTiers: [
+      { minQty: 1, unitPrice: 14500 },
+      { minQty: 10, unitPrice: 12800 },
+    ],
+    minQuantity: 1,
+    quantityStep: 1,
+    allowsArtworkUpload: false,
+    customQuoteOnly: false,
+    turnaroundDays: 5,
+    productionNote: "Wording confirmed with you before engraving.",
+  },
+  {
+    slug: "cut-stickers",
+    name: "Cut-to-Shape Stickers",
+    category: "stickers-labels",
+    shortDescription: "Vinyl, waterproof, any shape.",
+    description:
+      "Waterproof vinyl stickers cut to your artwork's shape. Great for product labels, laptop stickers and packaging.",
+    image: "https://images.unsplash.com/photo-1521249664898-864e6c1b6d5c?q=80&w=800&auto=format&fit=crop",
+    imageAlt: "Colourful individual stickers on a surface",
+    variantGroups: [
+      {
+        key: "finish",
+        label: "Finish",
+        options: [
+          { value: "matte", label: "Matte", priceModifier: 0 },
+          { value: "gloss", label: "Gloss", priceModifier: 0 },
+          { value: "holographic", label: "Holographic", priceModifier: 15 },
+        ],
+      },
+    ],
+    quantityTiers: [
+      { minQty: 50, unitPrice: 180 },
+      { minQty: 200, unitPrice: 120 },
+      { minQty: 500, unitPrice: 85 },
+      { minQty: 1000, unitPrice: 60 },
+    ],
+    minQuantity: 50,
+    quantityStep: 50,
+    allowsArtworkUpload: true,
+    customQuoteOnly: false,
+    turnaroundDays: 3,
+    productionNote: "Vector artwork (SVG/AI/PDF) cuts cleanest — flagged if we only get a raster file.",
+  },
+  {
+    slug: "logo-design",
+    name: "Logo Design",
+    category: "logo-branding",
+    shortDescription: "Brief-based, quoted per project.",
+    description:
+      "Logo design and starter brand identity, scoped to your brief. Tell us about the business and what you need, and we'll send a quote and timeline.",
+    image: "https://images.unsplash.com/photo-1611241893603-3c359704e0ee?q=80&w=800&auto=format&fit=crop",
+    imageAlt: "Designer sketching a logo on a tablet",
+    variantGroups: [],
+    quantityTiers: [],
+    minQuantity: 1,
+    quantityStep: 1,
+    allowsArtworkUpload: false,
+    customQuoteOnly: true,
+    turnaroundDays: 7,
+    productionNote: "Every logo project starts with a short brief call.",
+  },
+];
