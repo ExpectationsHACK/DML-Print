@@ -8,6 +8,10 @@ export const metadata: Metadata = {
   description: "Free guides and videos on preparing artwork and getting the most from print.",
 };
 
+// Reads live, admin-editable courses from MongoDB — render per-request,
+// not at build time. See app/page.tsx for the same reasoning.
+export const dynamic = "force-dynamic";
+
 export default async function LearnPage() {
   const courses = await getPublishedCourses();
 
