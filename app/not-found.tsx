@@ -1,9 +1,11 @@
 import { CartProvider } from "@/lib/cart-context";
 import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { Container } from "@/components/ui/Container";
 import { LinkButton } from "@/components/ui/Button";
 
+// Deliberately no <Footer /> here: Footer reads admin-editable categories
+// from MongoDB, and this page must always render even if the database is
+// unreachable — a 404 fallback shouldn't have a live dependency.
 export default function NotFound() {
   return (
     <CartProvider>
@@ -21,7 +23,6 @@ export default function NotFound() {
           </LinkButton>
         </Container>
       </main>
-      <Footer />
     </CartProvider>
   );
 }
