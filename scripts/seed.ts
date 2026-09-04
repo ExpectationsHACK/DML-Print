@@ -61,7 +61,7 @@ async function main() {
       _id: crypto.randomUUID(),
       email: adminEmail,
       passwordHash,
-      fullName: "DML Print Admin",
+      fullName: "DML Prints Admin",
       phone: null,
       role: "admin",
       createdAt: new Date(),

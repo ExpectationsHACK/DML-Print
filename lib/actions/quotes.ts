@@ -12,6 +12,8 @@ const quoteSchema = z.object({
   productCategory: z.string().min(2, "Tell us what you need printed."),
   description: z.string().min(10, "Add a few more details about the job."),
   quantity: z.string().optional(),
+  materialFinish: z.string().optional(),
+  filePath: z.string().url("Something went wrong with that upload — try again.").optional(),
   deadline: z.string().optional(),
 });
 
@@ -31,6 +33,8 @@ export async function submitQuote(
     productCategory: formData.get("productCategory"),
     description: formData.get("description"),
     quantity: formData.get("quantity") || undefined,
+    materialFinish: formData.get("materialFinish") || undefined,
+    filePath: formData.get("filePath") || undefined,
     deadline: formData.get("deadline") || undefined,
   });
 
@@ -61,6 +65,8 @@ export async function submitQuote(
       productCategory: parsed.data.productCategory,
       description: parsed.data.description,
       quantity: parsed.data.quantity ?? null,
+      materialFinish: parsed.data.materialFinish ?? null,
+      filePath: parsed.data.filePath ?? null,
       deadline: parsed.data.deadline ? new Date(parsed.data.deadline) : null,
       status: "new",
       createdAt: new Date(),

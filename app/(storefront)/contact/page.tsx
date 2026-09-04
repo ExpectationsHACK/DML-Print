@@ -20,7 +20,7 @@ export default function ContactPage() {
           </dt>
           <dd className="mt-1">
             <a
-              href={buildWhatsAppLink("Hello DML Print, I have a question.")}
+              href={buildWhatsAppLink("Hello DML Prints, I have a question.")}
               className="text-lg font-semibold text-ink hover:underline"
             >
               Chat with us
@@ -32,8 +32,38 @@ export default function ContactPage() {
             Email
           </dt>
           <dd className="mt-1">
-            <a href="mailto:hello@dmlprint.ng" className="text-lg hover:text-ink">
-              hello@dmlprint.ng
+            <a href="mailto:dmlprint001@gmail.com" className="text-lg hover:text-ink">
+              dmlprint001@gmail.com
+            </a>
+          </dd>
+        </div>
+        <div>
+          <dt className="text-xs font-semibold uppercase tracking-wide text-ink-soft">
+            Instagram
+          </dt>
+          <dd className="mt-1">
+            <a
+              href="https://instagram.com/dmlprintsonwears"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-lg hover:text-ink"
+            >
+              @dmlprintsonwears
+            </a>
+          </dd>
+        </div>
+        <div>
+          <dt className="text-xs font-semibold uppercase tracking-wide text-ink-soft">
+            TikTok
+          </dt>
+          <dd className="mt-1">
+            <a
+              href="https://www.tiktok.com/@dmlprintsonwears"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-lg hover:text-ink"
+            >
+              @dmlprintsonwears
             </a>
           </dd>
         </div>

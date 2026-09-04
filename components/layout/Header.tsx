@@ -7,9 +7,10 @@ import { MobileNav } from "@/components/layout/MobileNav";
 
 const links = [
   { href: "/products", label: "Shop" },
-  { href: "/quote", label: "Bulk quote" },
-  { href: "/track-order", label: "Track order" },
+  { href: "/about", label: "About" },
+  { href: "/corporate", label: "Corporate" },
   { href: "/how-it-works", label: "How it works" },
+  { href: "/faq", label: "FAQ" },
   { href: "/learn", label: "Learn" },
 ];
 
@@ -20,7 +21,7 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2.5">
           <LogoMark className="h-8 w-8 text-lg" />
           <span className="font-display text-xl font-extrabold tracking-tight">
-            DML Print
+            DML Prints
           </span>
         </Link>
 
@@ -45,8 +46,8 @@ export function Header() {
           </Link>
           <CartLink />
           <div className="hidden sm:block">
-            <LinkButton href="/products" className="!px-5 !py-2.5 text-sm">
-              Start an order
+            <LinkButton href="/quote" className="!px-5 !py-2.5 text-sm">
+              Request a Quote
             </LinkButton>
           </div>
           <MobileNav />

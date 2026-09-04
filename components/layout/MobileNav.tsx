@@ -5,11 +5,14 @@ import Link from "next/link";
 import { cn } from "@/lib/cn";
 
 const links = [
-  { href: "/products", label: "Shop" },
   { href: "/quote", label: "Request a quote" },
-  { href: "/track-order", label: "Track order" },
+  { href: "/products", label: "Shop" },
+  { href: "/about", label: "About" },
+  { href: "/corporate", label: "Corporate" },
   { href: "/how-it-works", label: "How it works" },
+  { href: "/faq", label: "FAQ" },
   { href: "/learn", label: "Learn" },
+  { href: "/track-order", label: "Track order" },
   { href: "/contact", label: "Contact" },
 ];
 

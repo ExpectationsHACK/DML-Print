@@ -1,11 +1,9 @@
-export type CategorySlug =
-  | "business-cards-stationery"
-  | "flyers-posters"
-  | "banners-signage"
-  | "apparel"
-  | "mugs-gifts"
-  | "stickers-labels"
-  | "logo-branding";
+/**
+ * Not a closed set — the built-in categories in lib/data/catalog.ts are
+ * seeded defaults, but admins can add more from the product form, stored in
+ * the `categories` collection. See lib/data/categories.ts.
+ */
+export type CategorySlug = string;
 
 export type Category = {
   slug: CategorySlug;
@@ -63,6 +61,30 @@ export type Course = {
   /** Video: an embeddable URL (YouTube/Vimeo/etc). Written: the article body (plain text/markdown-ish). */
   content: string;
   coverImage: string;
+  published: boolean;
+  createdAt: string;
+};
+
+export type PortfolioCategory = "corporate" | "branding" | "apparel" | "events" | "personalized";
+
+export const PORTFOLIO_CATEGORY_LABEL: Record<PortfolioCategory, string> = {
+  corporate: "Corporate",
+  branding: "Branding",
+  apparel: "Apparel",
+  events: "Events",
+  personalized: "Personalized",
+};
+
+export type PortfolioItem = {
+  id: string;
+  slug: string;
+  title: string;
+  category: PortfolioCategory;
+  clientName: string | null;
+  productionDetails: string | null;
+  description: string;
+  image: string;
+  imageAlt: string;
   published: boolean;
   createdAt: string;
 };

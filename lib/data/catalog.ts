@@ -1,4 +1,4 @@
-import type { Category, CategorySlug, Product } from "@/lib/types";
+import type { Category, Product } from "@/lib/types";
 
 export const CATEGORIES: Category[] = [
   {
@@ -45,10 +45,6 @@ export const CATEGORIES: Category[] = [
     description: "Logo design and brand identity, quoted to the brief.",
   },
 ];
-
-export const CATEGORY_MAP: Record<CategorySlug, Category> = Object.fromEntries(
-  CATEGORIES.map((c) => [c.slug, c])
-) as Record<CategorySlug, Category>;
 
 function pluralize(word: string, count: number): string {
   if (count === 1) return word;

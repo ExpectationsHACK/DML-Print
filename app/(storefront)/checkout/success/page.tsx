@@ -59,7 +59,7 @@ export default async function CheckoutSuccessPage({
       <div className="mt-8 flex flex-wrap justify-center gap-4">
         {order && (
           <a
-            href={buildWhatsAppLink(`Hello DML Print, following up on order ${order.orderNumber}.`)}
+            href={buildWhatsAppLink(`Hello DML Prints, following up on order ${order.orderNumber}.`)}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] border-2 border-line px-6 py-3.5 text-[15px] font-bold text-ink transition-colors hover:border-ink"

@@ -11,7 +11,7 @@ export function orderWhatsAppMessage(params: {
   quantity: number;
 }): string {
   const lines = [
-    `Hello DML Print, I'd like to order:`,
+    `Hello DML Prints, I'd like to order:`,
     ``,
     `Product: ${params.productName}`,
   ];

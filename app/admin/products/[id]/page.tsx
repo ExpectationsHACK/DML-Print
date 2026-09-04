@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { productsCollection, isDbConfigured } from "@/lib/db";
 import { ProductForm } from "@/components/admin/ProductForm";
 import { updateProduct } from "@/lib/actions/products";
+import { getAllCategories } from "@/lib/data/categories";
 import type { CategorySlug, Product } from "@/lib/types";
 
 export const metadata: Metadata = { title: "Edit product" };
@@ -16,6 +17,8 @@ export default async function EditProductPage({
 
   const doc = await (await productsCollection()).findOne({ _id: id });
   if (!doc) notFound();
+
+  const categories = await getAllCategories();
 
   const product: Product = {
     id: doc._id,
@@ -50,7 +53,7 @@ export default async function EditProductPage({
         </p>
       )}
       <div className="mt-6">
-        <ProductForm action={updateProduct.bind(null, product.id)} product={product} />
+        <ProductForm action={updateProduct.bind(null, product.id)} product={product} categories={categories} />
       </div>
     </div>
   );

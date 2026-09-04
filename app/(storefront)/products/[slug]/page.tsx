@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { ProductMockup } from "@/components/shop/ProductMockup";
 import { ProductCustomizer } from "@/components/shop/ProductCustomizer";
-import { CATEGORY_MAP } from "@/lib/data/catalog";
+import { getCategoryBySlug } from "@/lib/data/categories";
 import { getProductBySlug } from "@/lib/data/products";
 
 export async function generateMetadata({
@@ -25,15 +25,19 @@ export default async function ProductPage({
   const product = await getProductBySlug(slug);
   if (!product) notFound();
 
-  const category = CATEGORY_MAP[product.category];
+  const category = await getCategoryBySlug(product.category);
 
   return (
     <Container className="py-12">
       <nav className="mb-6 text-sm text-ink-soft">
-        <a href={`/products?category=${category.slug}`} className="hover:text-ink">
-          {category.name}
-        </a>
-        <span className="mx-2">/</span>
+        {category && (
+          <>
+            <a href={`/products?category=${category.slug}`} className="hover:text-ink">
+              {category.name}
+            </a>
+            <span className="mx-2">/</span>
+          </>
+        )}
         <span>{product.name}</span>
       </nav>
 

@@ -25,7 +25,7 @@ export default async function DemoPayPage({
 
   return (
     <Container className="max-w-md py-16 text-center">
-      <span className="inline-block rounded-md bg-butter px-3 py-1 text-xs font-bold uppercase tracking-wide text-ink">
+      <span className="inline-block rounded-md bg-lime/40 px-3 py-1 text-xs font-bold uppercase tracking-wide text-ink">
         Demo payment — no money moves
       </span>
       <h1 className="mt-4 font-display text-3xl font-extrabold tracking-tight">

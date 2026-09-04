@@ -21,22 +21,45 @@ export function StarIcon({ className }: { className?: string }) {
   );
 }
 
-export function LogoMark({ className }: { className?: string }) {
+export function LogoMark({
+  className,
+  animated,
+}: {
+  className?: string;
+  /** Pulses each bar on a stagger — used for loading states. */
+  animated?: boolean;
+}) {
   return (
     <span
       className={className}
+      role={animated ? "status" : undefined}
+      aria-label={animated ? "Loading" : undefined}
       style={{
         display: "inline-flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "var(--ink)",
-        color: "var(--lime)",
-        fontWeight: 800,
-        borderRadius: 8,
+        background: "var(--forest)",
+        borderRadius: animated ? 12 : 8,
       }}
-      aria-hidden="true"
+      aria-hidden={animated ? undefined : "true"}
     >
-      D
+      <svg viewBox="0 0 24 24" width="68%" height="68%" fill="none">
+        <rect
+          x="6" y="4.5" width="12" height="4" rx="1.5" fill="#E4392E"
+          className={animated ? "animate-pulse" : undefined}
+          style={animated ? { animationDelay: "0ms" } : undefined}
+        />
+        <rect
+          x="4" y="10" width="16" height="4" rx="1.5" fill="#F2C230"
+          className={animated ? "animate-pulse" : undefined}
+          style={animated ? { animationDelay: "150ms" } : undefined}
+        />
+        <rect
+          x="6" y="15.5" width="12" height="4" rx="1.5" fill="#1E9DD8"
+          className={animated ? "animate-pulse" : undefined}
+          style={animated ? { animationDelay: "300ms" } : undefined}
+        />
+      </svg>
     </span>
   );
 }

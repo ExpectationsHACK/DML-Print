@@ -7,13 +7,11 @@ import { z } from "zod";
 import { auth } from "@/auth";
 import { productsCollection, isDbConfigured, newId } from "@/lib/db";
 import { slugify } from "@/lib/data/catalog";
-import { CATEGORIES } from "@/lib/data/catalog";
-
-const categorySlugs = CATEGORIES.map((c) => c.slug) as [string, ...string[]];
+import { getCategoryBySlug } from "@/lib/data/categories";
 
 const productSchema = z.object({
   name: z.string().min(2, "Enter a product name."),
-  category: z.enum(categorySlugs),
+  category: z.string().min(1, "Select a category."),
   shortDescription: z.string().min(2, "Enter a short description."),
   description: z.string().min(10, "Enter a fuller description."),
   price: z.coerce.number().positive("Enter a price greater than 0."),
@@ -64,6 +62,10 @@ async function resolveImage(
   return { image: fallback, imageAlt: name };
 }
 
+async function isKnownCategory(slug: string): Promise<boolean> {
+  return (await getCategoryBySlug(slug)) !== undefined;
+}
+
 function parseForm(formData: FormData) {
   return productSchema.safeParse({
     name: formData.get("name"),
@@ -90,6 +92,9 @@ export async function createProduct(
     const fieldErrors: Record<string, string> = {};
     for (const issue of parsed.error.issues) fieldErrors[String(issue.path[0])] = issue.message;
     return { ok: false, error: "Please check the highlighted fields.", fieldErrors };
+  }
+  if (!(await isKnownCategory(parsed.data.category))) {
+    return { ok: false, error: "Please check the highlighted fields.", fieldErrors: { category: "Select a valid category." } };
   }
 
   const image = await resolveImage(
@@ -147,6 +152,9 @@ export async function updateProduct(
     const fieldErrors: Record<string, string> = {};
     for (const issue of parsed.error.issues) fieldErrors[String(issue.path[0])] = issue.message;
     return { ok: false, error: "Please check the highlighted fields.", fieldErrors };
+  }
+  if (!(await isKnownCategory(parsed.data.category))) {
+    return { ok: false, error: "Please check the highlighted fields.", fieldErrors: { category: "Select a valid category." } };
   }
 
   const products = await productsCollection();

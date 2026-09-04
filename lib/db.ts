@@ -78,8 +78,19 @@ export type QuoteRequestDoc = {
   productCategory: string;
   description: string;
   quantity: string | null;
+  materialFinish: string | null;
+  filePath: string | null;
   deadline: Date | null;
   status: QuoteStatusValue;
+  createdAt: Date;
+};
+
+export type CategoryDoc = {
+  _id: string;
+  slug: string;
+  name: string;
+  tagline: string;
+  description: string;
   createdAt: Date;
 };
 
@@ -104,6 +115,23 @@ export type ProductDoc = {
   customQuoteOnly: boolean;
   turnaroundDays: number;
   productionNote: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type PortfolioCategoryValue = "corporate" | "branding" | "apparel" | "events" | "personalized";
+
+export type PortfolioDoc = {
+  _id: string;
+  slug: string;
+  title: string;
+  category: PortfolioCategoryValue;
+  clientName: string | null;
+  productionDetails: string | null;
+  description: string;
+  image: string;
+  imageAlt: string;
+  published: boolean;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -138,6 +166,9 @@ async function ensureIndexes(client: MongoClient): Promise<void> {
     database.collection<ProductDoc>("products").createIndex({ slug: 1 }, { unique: true }),
     database.collection<ProductDoc>("products").createIndex({ category: 1 }),
     database.collection<CourseDoc>("courses").createIndex({ slug: 1 }, { unique: true }),
+    database.collection<PortfolioDoc>("portfolio").createIndex({ slug: 1 }, { unique: true }),
+    database.collection<PortfolioDoc>("portfolio").createIndex({ category: 1 }),
+    database.collection<CategoryDoc>("categories").createIndex({ slug: 1 }, { unique: true }),
   ]);
 }
 
@@ -204,4 +235,14 @@ export async function productsCollection(): Promise<Collection<ProductDoc>> {
 export async function coursesCollection(): Promise<Collection<CourseDoc>> {
   const client = await getClientPromise();
   return client.db().collection<CourseDoc>("courses");
+}
+
+export async function portfolioCollection(): Promise<Collection<PortfolioDoc>> {
+  const client = await getClientPromise();
+  return client.db().collection<PortfolioDoc>("portfolio");
+}
+
+export async function categoriesCollection(): Promise<Collection<CategoryDoc>> {
+  const client = await getClientPromise();
+  return client.db().collection<CategoryDoc>("categories");
 }

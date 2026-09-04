@@ -2,10 +2,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { ProductCard } from "@/components/shop/ProductCard";
-import { CATEGORIES } from "@/lib/data/catalog";
+import { getAllCategories } from "@/lib/data/categories";
 import { getAllProducts, getProductsByCategory } from "@/lib/data/products";
 import { cn } from "@/lib/cn";
-import type { CategorySlug } from "@/lib/types";
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -16,11 +15,12 @@ export default async function ProductsPage({
   searchParams,
 }: PageProps<"/products">) {
   const { category } = await searchParams;
-  const activeCategory = typeof category === "string" ? (category as CategorySlug) : undefined;
+  const activeCategory = typeof category === "string" ? category : undefined;
 
-  const products = activeCategory
-    ? await getProductsByCategory(activeCategory)
-    : await getAllProducts();
+  const [products, categories] = await Promise.all([
+    activeCategory ? getProductsByCategory(activeCategory) : getAllProducts(),
+    getAllCategories(),
+  ]);
 
   return (
     <Container className="py-12">
@@ -40,7 +40,7 @@ export default async function ProductsPage({
         >
           All
         </Link>
-        {CATEGORIES.map((c) => (
+        {categories.map((c) => (
           <Link
             key={c.slug}
             href={`/products?category=${c.slug}`}

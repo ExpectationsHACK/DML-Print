@@ -3,12 +3,12 @@ import { ORDER_STATUS_LABEL, type OrderStatus } from "@/lib/types";
 
 const tone: Record<OrderStatus, string> = {
   pending_payment: "bg-surface-sunken text-ink-soft",
-  paid: "bg-sky/30 text-ink",
-  in_production: "bg-butter/50 text-ink",
-  quality_check: "bg-butter/50 text-ink",
-  ready_for_dispatch: "bg-sky/30 text-ink",
-  dispatched: "bg-sky/30 text-ink",
-  delivered: "bg-lime/40 text-ink",
+  paid: "bg-lime/30 text-ink",
+  in_production: "bg-lime/50 text-ink",
+  quality_check: "bg-forest/15 text-forest",
+  ready_for_dispatch: "bg-forest/25 text-forest",
+  dispatched: "bg-forest/40 text-forest",
+  delivered: "bg-forest text-cream",
   cancelled: "bg-danger/10 text-danger line-through",
 };
 

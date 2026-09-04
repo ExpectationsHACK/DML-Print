@@ -1,25 +1,49 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState, useTransition } from "react";
 import { Button } from "@/components/ui/Button";
 import { Field, Input, Select, Textarea } from "@/components/ui/Field";
 import { ImageCropper } from "@/components/admin/ImageCropper";
-import { CATEGORIES } from "@/lib/data/catalog";
+import { createCategory } from "@/lib/actions/categories";
 import type { ProductFormResult } from "@/lib/actions/products";
-import type { Product } from "@/lib/types";
+import type { Category, Product } from "@/lib/types";
 
 const initialState: ProductFormResult | null = null;
 
 export function ProductForm({
   action,
   product,
+  categories,
 }: {
   action: (prevState: ProductFormResult | null, formData: FormData) => Promise<ProductFormResult>;
   product?: Product;
+  categories: Category[];
 }) {
   const [state, formAction, pending] = useActionState(action, initialState);
   const fieldErrors = state?.fieldErrors ?? {};
   const currentPrice = product?.quantityTiers[0]?.unitPrice ?? "";
+
+  const [categoryList, setCategoryList] = useState(categories);
+  const [selectedCategory, setSelectedCategory] = useState(product?.category ?? "");
+  const [addingCategory, setAddingCategory] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [categoryError, setCategoryError] = useState<string | null>(null);
+  const [creatingCategory, startCreatingCategory] = useTransition();
+
+  function handleAddCategory() {
+    setCategoryError(null);
+    startCreatingCategory(async () => {
+      const result = await createCategory(newCategoryName);
+      if (!result.ok) {
+        setCategoryError(result.error);
+        return;
+      }
+      setCategoryList((prev) => [...prev, result.category]);
+      setSelectedCategory(result.category.slug);
+      setNewCategoryName("");
+      setAddingCategory(false);
+    });
+  }
 
   return (
     <form action={formAction} className="max-w-xl space-y-5">
@@ -29,17 +53,65 @@ export function ProductForm({
       </Field>
 
       <Field label="Category" htmlFor="category" required>
-        <Select id="category" name="category" required defaultValue={product?.category ?? ""}>
+        <Select
+          id="category"
+          name="category"
+          required
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+        >
           <option value="" disabled>
             Select a category
           </option>
-          {CATEGORIES.map((c) => (
+          {categoryList.map((c) => (
             <option key={c.slug} value={c.slug}>
               {c.name}
             </option>
           ))}
         </Select>
         {fieldErrors.category && <p className="mt-1 text-xs text-danger">{fieldErrors.category}</p>}
+
+        {addingCategory ? (
+          <div className="mt-2 flex items-start gap-2">
+            <div className="flex-1">
+              <Input
+                autoFocus
+                placeholder="New category name"
+                value={newCategoryName}
+                onChange={(e) => setNewCategoryName(e.target.value)}
+              />
+              {categoryError && <p className="mt-1 text-xs text-danger">{categoryError}</p>}
+            </div>
+            <Button
+              type="button"
+              variant="secondary"
+              className="!px-4 !py-2.5 text-sm"
+              disabled={creatingCategory}
+              onClick={handleAddCategory}
+            >
+              {creatingCategory ? "Adding..." : "Add"}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => {
+                setAddingCategory(false);
+                setCategoryError(null);
+                setNewCategoryName("");
+              }}
+            >
+              Cancel
+            </Button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setAddingCategory(true)}
+            className="mt-2 text-sm font-bold text-forest hover:underline"
+          >
+            + Add a new category
+          </button>
+        )}
       </Field>
 
       <Field label="Short description" htmlFor="shortDescription" required hint="Shown on product cards.">

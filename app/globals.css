@@ -2,30 +2,26 @@
 
 :root {
   /* Surfaces */
-  --paper: #ffffff;
+  --paper: #f7f5ef;
   --surface: #ffffff;
-  --surface-sunken: #f5f5f0;
-  --cream: #fbfbf3;
-  --line: #e5e5dd;
+  --surface-sunken: #dce9e1;
+  --cream: #f7f5ef;
+  --line: #c9d6cd;
 
   /* Ink */
-  --ink: #2f2e0c;
-  --ink-soft: #6f6e57;
-  --ink-faint: #6f6e5760;
+  --ink: #161b18;
+  --ink-soft: #4b564f;
+  --ink-faint: #161b1860;
 
   /* Brand */
-  --lime: #aeff6e;
-  --lime-strong: #93e84f;
-  --danger: #d9432e;
-  --focus-ring: #2f2e0c;
+  --lime: #28704f;
+  --lime-strong: #164d3a;
+  --danger: #b3261e;
+  --focus-ring: #0b2f24;
 
-  /* Pastel product mattes — rotate behind mockups & category cards */
-  --sky: #8de4ff;
-  --lavender: #d9cdf5;
-  --peach: #f7d9c0;
-  --mint: #c3efce;
-  --butter: #fbf0b8;
-  --blush: #f7d3de;
+  /* Primary CTA / nav / footer anchor */
+  --forest: #0b2f24;
+  --forest-soft: #164d3a;
 
   --radius-card: 16px;
   --radius-control: 10px;
@@ -45,18 +41,13 @@
   --color-lime: var(--lime);
   --color-lime-strong: var(--lime-strong);
   --color-danger: var(--danger);
-
-  --color-sky: var(--sky);
-  --color-lavender: var(--lavender);
-  --color-peach: var(--peach);
-  --color-mint: var(--mint);
-  --color-butter: var(--butter);
-  --color-blush: var(--blush);
+  --color-forest: var(--forest);
+  --color-forest-soft: var(--forest-soft);
 
   --radius-card: var(--radius-card);
   --radius-control: var(--radius-control);
 
-  --font-display: var(--font-display), "Arial Rounded MT Bold", sans-serif;
+  --font-display: var(--font-display), "Segoe UI", sans-serif;
   --font-body: var(--font-body), system-ui, sans-serif;
   --font-mono: var(--font-mono), ui-monospace, monospace;
 }

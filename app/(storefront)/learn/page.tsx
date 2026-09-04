@@ -20,7 +20,7 @@ export default async function LearnPage() {
       <h1 className="font-display text-4xl font-extrabold tracking-tight sm:text-5xl">Learn</h1>
       <p className="mt-3 max-w-xl text-ink-soft">
         Short guides and videos on preparing artwork, choosing materials, and
-        getting the most out of print — written by the DML Print team.
+        getting the most out of print — written by the DML Prints team.
       </p>
 
       <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -30,7 +30,7 @@ export default async function LearnPage() {
               className="relative aspect-[16/10] w-full overflow-hidden bg-surface-sunken"
               style={{ borderRadius: "var(--radius-card)" }}
             >
-              <span className="absolute left-3 top-3 z-10 rounded-md bg-sky px-2.5 py-1 text-xs font-bold capitalize text-ink">
+              <span className="absolute left-3 top-3 z-10 rounded-md bg-forest px-2.5 py-1 text-xs font-bold capitalize text-cream">
                 {course.type}
               </span>
               {/* eslint-disable-next-line @next/next/no-img-element -- cover images are arbitrary admin-pasted URLs, not allowlisted domains */}

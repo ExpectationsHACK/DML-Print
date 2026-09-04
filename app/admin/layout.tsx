@@ -1,17 +1,11 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Container } from "@/components/ui/Container";
+import { LogoMark } from "@/components/ui/Icons";
+import { AdminMobileNav } from "@/components/admin/AdminMobileNav";
 import { auth } from "@/auth";
 import { signOut } from "@/lib/actions/auth";
-
-const links = [
-  { href: "/admin", label: "Dashboard" },
-  { href: "/admin/orders", label: "Orders" },
-  { href: "/admin/products", label: "Products" },
-  { href: "/admin/quotes", label: "Quote requests" },
-  { href: "/admin/customers", label: "Customers" },
-  { href: "/admin/learn", label: "Learn" },
-];
+import { ADMIN_NAV_LINKS } from "@/lib/admin-nav";
 
 export default async function AdminLayout({ children }: LayoutProps<"/admin">) {
   const session = await auth();
@@ -21,27 +15,25 @@ export default async function AdminLayout({ children }: LayoutProps<"/admin">) {
 
   return (
     <div className="min-h-screen bg-surface-sunken">
-      <header className="bg-[#2F2E0C] text-[#FBFBF3]">
+      <header className="relative bg-forest text-cream">
         <Container className="flex h-14 items-center justify-between">
           <div className="flex items-center gap-2 font-display text-base font-extrabold tracking-tight">
-            <span
-              className="flex h-6 w-6 items-center justify-center rounded-md bg-lime text-xs font-extrabold text-[#2F2E0C]"
-              aria-hidden="true"
-            >
-              D
-            </span>
-            DML Print Admin
+            <LogoMark className="h-7 w-7 shrink-0 ring-1 ring-cream/20" />
+            DML Prints Admin
           </div>
-          <form action={signOut}>
-            <button className="text-xs font-semibold text-[#FBFBF3]/70 hover:text-[#FBFBF3]">
-              Sign out
-            </button>
-          </form>
+          <div className="flex items-center gap-4">
+            <form action={signOut} className="hidden sm:block">
+              <button className="text-xs font-semibold text-cream/70 hover:text-cream">
+                Sign out
+              </button>
+            </form>
+            <AdminMobileNav />
+          </div>
         </Container>
       </header>
       <Container className="grid gap-10 py-10 sm:grid-cols-[180px_1fr]">
-        <nav className="flex flex-col gap-1">
-          {links.map((link) => (
+        <nav className="hidden flex-col gap-1 sm:flex">
+          {ADMIN_NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -51,7 +43,14 @@ export default async function AdminLayout({ children }: LayoutProps<"/admin">) {
             </Link>
           ))}
         </nav>
-        <div>{children}</div>
+        <div>
+          <form action={signOut} className="mb-6 sm:hidden">
+            <button className="text-xs font-semibold text-ink-soft hover:text-ink">
+              Sign out
+            </button>
+          </form>
+          {children}
+        </div>
       </Container>
     </div>
   );

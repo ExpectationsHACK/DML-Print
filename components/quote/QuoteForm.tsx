@@ -1,18 +1,24 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Field, Input, Select, Textarea } from "@/components/ui/Field";
-import { CATEGORIES } from "@/lib/data/catalog";
 import { submitQuote, type QuoteResult } from "@/lib/actions/quotes";
+import { uploadArtwork } from "@/lib/actions/uploads";
+import { buildWhatsAppLink } from "@/lib/whatsapp";
+import type { Category } from "@/lib/types";
 
 const initialState: QuoteResult | null = null;
 
-export function QuoteForm() {
+export function QuoteForm({ categories }: { categories: Category[] }) {
   const searchParams = useSearchParams();
   const prefillProduct = searchParams.get("product") ?? "";
   const [state, action, pending] = useActionState(submitQuote, initialState);
+  const [filePath, setFilePath] = useState("");
+  const [fileName, setFileName] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
 
   if (state?.ok) {
     return (
@@ -27,6 +33,25 @@ export function QuoteForm() {
   }
 
   const fieldErrors = state && !state.ok ? state.fieldErrors ?? {} : {};
+
+  async function handleFile(file: File | null) {
+    setFilePath("");
+    setUploadError(null);
+    setFileName(file?.name ?? "");
+    if (!file) return;
+
+    setUploading(true);
+    const fd = new FormData();
+    fd.append("file", file);
+    const result = await uploadArtwork(fd);
+    setUploading(false);
+
+    if (result.ok) {
+      setFilePath(result.path);
+    } else {
+      setUploadError(result.error);
+    }
+  }
 
   return (
     <form action={action} className="space-y-5">
@@ -45,7 +70,7 @@ export function QuoteForm() {
           <Input id="email" name="email" type="email" required />
           {fieldErrors.email && <p className="mt-1 text-xs text-danger">{fieldErrors.email}</p>}
         </Field>
-        <Field label="Phone" htmlFor="phone" required>
+        <Field label="Phone / WhatsApp" htmlFor="phone" required>
           <Input id="phone" name="phone" type="tel" required />
           {fieldErrors.phone && <p className="mt-1 text-xs text-danger">{fieldErrors.phone}</p>}
         </Field>
@@ -56,10 +81,10 @@ export function QuoteForm() {
           <option value="" disabled>
             Select a category
           </option>
-          {prefillProduct && !CATEGORIES.some((c) => c.name === prefillProduct) && (
+          {prefillProduct && !categories.some((c) => c.name === prefillProduct) && (
             <option value={prefillProduct}>{prefillProduct}</option>
           )}
-          {CATEGORIES.map((c) => (
+          {categories.map((c) => (
             <option key={c.slug} value={c.name}>
               {c.name}
             </option>
@@ -75,10 +100,14 @@ export function QuoteForm() {
         <Field label="Estimated quantity" htmlFor="quantity">
           <Input id="quantity" name="quantity" placeholder="e.g. 500 pieces" />
         </Field>
-        <Field label="Deadline" htmlFor="deadline">
-          <Input id="deadline" name="deadline" type="date" />
+        <Field label="Material / finish (if known)" htmlFor="materialFinish">
+          <Input id="materialFinish" name="materialFinish" placeholder="e.g. matte, 300gsm" />
         </Field>
       </div>
+
+      <Field label="Preferred deadline" htmlFor="deadline">
+        <Input id="deadline" name="deadline" type="date" />
+      </Field>
 
       <Field label="Tell us about the job" htmlFor="description" required>
         <Textarea
@@ -92,11 +121,37 @@ export function QuoteForm() {
         )}
       </Field>
 
+      <Field label="Upload design / brief (optional)" htmlFor="file">
+        <input
+          id="file"
+          type="file"
+          accept="image/png,image/jpeg,image/webp,application/pdf"
+          onChange={(e) => handleFile(e.target.files?.[0] ?? null)}
+          className="w-full rounded-[var(--radius-control)] border-2 border-line bg-surface px-3 py-2.5 text-sm"
+        />
+        <input type="hidden" name="filePath" value={filePath} />
+        {uploading && <p className="mt-1.5 text-xs text-ink-soft">Uploading&hellip;</p>}
+        {filePath && !uploading && (
+          <p className="mt-1.5 text-xs font-semibold text-ink">{fileName} uploaded ✓</p>
+        )}
+        {uploadError && <p className="mt-1.5 text-xs text-danger">{uploadError}</p>}
+      </Field>
+
       {state && !state.ok && <p className="text-sm text-danger">{state.error}</p>}
 
       <Button type="submit" disabled={pending}>
-        {pending ? "Sending..." : "Send request"}
+        {pending ? "Sending..." : "Submit Project Request"}
       </Button>
+
+      <p className="text-sm text-ink-soft">
+        Prefer WhatsApp?{" "}
+        <a
+          href={buildWhatsAppLink("Hello DML Prints, I'd like to start a project.")}
+          className="font-semibold text-ink underline underline-offset-4 hover:text-forest"
+        >
+          Chat With DML Prints
+        </a>
+      </p>
     </form>
   );
 }

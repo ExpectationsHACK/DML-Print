@@ -1,12 +1,9 @@
 import { LinkButton } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { CheckIcon, StarIcon } from "@/components/ui/Icons";
 import { ProductMockup } from "@/components/shop/ProductMockup";
 import { getProductBySlug } from "@/lib/data/products";
 
 const showcaseSlugs = ["custom-t-shirts", "custom-mugs", "premium-business-cards", "pvc-banners"];
-
-const trustBullets = ["7 product categories", "Nationwide delivery", "Pay with Paystack"];
 
 export async function Hero() {
   const showcase = (await Promise.all(showcaseSlugs.map((s) => getProductBySlug(s)))).filter(
@@ -17,37 +14,23 @@ export async function Hero() {
     <section className="bg-paper">
       <Container className="grid gap-12 py-14 lg:grid-cols-2 lg:items-center lg:py-20">
         <div>
-          <h1 className="font-display text-[42px] font-extrabold uppercase leading-[1.05] tracking-tight sm:text-6xl">
-            Design it.
+          <h1 className="font-display text-[38px] font-extrabold uppercase leading-[1.05] tracking-tight sm:text-5xl">
+            We Print Stories.
             <br />
-            We print it.
+            We Build Impressions.
           </h1>
 
-          <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
-            {trustBullets.map((bullet) => (
-              <li key={bullet} className="flex items-center gap-1.5 text-sm font-semibold text-ink">
-                <CheckIcon className="h-4 w-4 text-lime-strong" />
-                {bullet}
-              </li>
-            ))}
-          </ul>
+          <p className="mt-5 max-w-md text-[15px] leading-relaxed text-ink-soft">
+            From corporate printing and brand materials to personalized
+            products and apparel, DML Prints transforms your ideas into
+            tangible experiences that people can see, feel and remember.
+          </p>
 
           <div className="mt-8 flex flex-wrap gap-4">
-            <LinkButton href="/products">Start designing</LinkButton>
-            <LinkButton href="/quote" variant="secondary">
-              Request a bulk quote
+            <LinkButton href="/quote">Start a Project</LinkButton>
+            <LinkButton href="#our-work" variant="secondary">
+              View Our Work
             </LinkButton>
-          </div>
-
-          <div className="mt-8 flex items-center gap-2">
-            <div className="flex text-ink">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <StarIcon key={i} className="h-4 w-4" />
-              ))}
-            </div>
-            <span className="text-sm font-semibold text-ink-soft">
-              Trusted by businesses across Lagos
-            </span>
           </div>
         </div>
 

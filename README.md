@@ -1,6 +1,6 @@
-# DML Print
+# DML Prints
 
-A single-vendor custom-print storefront for DML Print — customers browse
+A single-vendor custom-print storefront for DML Prints — customers browse
 products, customise them, upload artwork, pay with Paystack, and track their
 order to delivery. Staff manage everything through `/admin`.
 
@@ -28,20 +28,22 @@ catch-all and the Paystack webhook).
   don't fit a fixed price, emailed straight to the admin inbox.
 - **Learn** — a public `/learn` section of written or video courses, fully
   managed from `/admin/learn`.
+- **Brand pages** — `/about`, `/corporate` and `/faq`, plus a homepage "Our
+  Work" portfolio section pulling real project photography from MongoDB.
 - **Transactional email** — order received, payment confirmed, and status
   change emails to customers; new order and new quote alerts to the admin.
   No verification emails.
 - **Admin** — dashboard; orders queue with status updates, search, and date
   filtering; full product CRUD with an in-browser crop/resize tool for
-  photos; quote request inbox; customer list with a detail view (orders,
-  addresses) and a promote/demote control. Role-gated via
-  `users.role = 'admin'`, checked server-side on every read and write, not
-  just in the UI.
+  photos; portfolio CRUD for the "Our Work" section; quote request inbox;
+  customer list with a detail view (orders, addresses) and a promote/demote
+  control. Role-gated via `users.role = 'admin'`, checked server-side on
+  every read and write, not just in the UI.
 
 ## Deliberately left out for now
 
 - Multi-printer marketplace, routing/matching, split orders, seller
-  storefronts — DML Print is a single vendor, not a marketplace, so none of
+  storefronts — DML Prints is a single vendor, not a marketplace, so none of
   this applies yet.
 - Canva-style design editor, AI design tools, mockup generator.
 - Payment splitting, automated payouts.
@@ -107,19 +109,21 @@ app/                  routes (App Router)
   products/            catalog + product detail (reads from MongoDB)
   cart/, checkout/      cart, checkout, and the Paystack demo-pay screen
   learn/                 public Learn courses
+  about/, corporate/, faq/  brand pages
   quote/, track-order/  bulk quote form, guest order tracking
   account/              customer area (protected)
   admin/                staff area (protected, role=admin): dashboard,
-                         orders, products, learn, quotes, customers
+                         orders, products, portfolio, learn, quotes, customers
   api/auth/              Auth.js route handler
   api/paystack/webhook/ payment confirmation (source of truth)
-components/            UI, grouped by feature area (admin/, shop/, ...)
+components/            UI, grouped by feature area (admin/, shop/, home/, ...)
 lib/
   actions/              Server Actions (checkout, auth, admin, products,
-                         courses, uploads, demo-payment...)
+                         portfolio, courses, uploads, demo-payment...)
   data/                  categories + pure helpers (catalog.ts), MongoDB
-                         product/course queries (products.ts, courses.ts),
-                         starter catalog for the seed script (seed-products.ts)
+                         product/course/portfolio queries (products.ts,
+                         courses.ts, portfolio.ts), starter catalog for the
+                         seed script (seed-products.ts)
   db.ts                  MongoDB client singleton + typed collection accessors
   email.ts               Resend wrapper + email templates
   types.ts, pricing.ts, format.ts, whatsapp.ts, paystack.ts
@@ -144,8 +148,7 @@ touching the database — see `lib/actions/admin.ts` for the pattern.
 
 ## Design system
 
-The brand takes its visual language from Printify rather than generic SaaS
-styling: a white background, a bold uppercase display face (Plus Jakarta
-Sans) for headlines, a lime-green primary accent against near-black ink
-text, and a rotating pastel palette behind product photography. Tokens live
-in `app/globals.css`.
+A premium, editorial print-studio identity: a warm ivory background, a
+forest-green anchor (navigation, footer, primary CTAs) rather than a colour
+wash over every section, and Manrope (ExtraBold/Bold headings, SemiBold
+nav, Regular/Medium body) throughout. Tokens live in `app/globals.css`.

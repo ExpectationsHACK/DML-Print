@@ -19,7 +19,7 @@ export function ProductMockup({
       style={{ borderRadius: "var(--radius-card)" }}
     >
       {badge && (
-        <span className="absolute left-3 top-3 z-10 rounded-md bg-sky px-2.5 py-1 text-xs font-bold text-ink">
+        <span className="absolute left-3 top-3 z-10 rounded-md bg-forest px-2.5 py-1 text-xs font-bold text-cream">
           {badge}
         </span>
       )}
